@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35919.96 d17.13
+VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainDrivenDesign.Domain", "DomainDrivenDesign.Domain\DomainDrivenDesign.Domain.csproj", "{186E7F8D-8CD8-4F5A-8904-8BE04D976498}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainDrivenDesign.SmallTest", "SmallTest\DomainDrivenDesign.SmallTest\DomainDrivenDesign.SmallTest.csproj", "{277E856D-7BC9-484B-B7CC-35D0B5B2ACA6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{186E7F8D-8CD8-4F5A-8904-8BE04D976498}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{186E7F8D-8CD8-4F5A-8904-8BE04D976498}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{186E7F8D-8CD8-4F5A-8904-8BE04D976498}.Release|Any CPU.Build.0 = Release|Any CPU
+		{277E856D-7BC9-484B-B7CC-35D0B5B2ACA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{277E856D-7BC9-484B-B7CC-35D0B5B2ACA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{277E856D-7BC9-484B-B7CC-35D0B5B2ACA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{277E856D-7BC9-484B-B7CC-35D0B5B2ACA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
