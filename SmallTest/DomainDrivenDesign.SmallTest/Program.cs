@@ -47,6 +47,62 @@ namespace SmallTest.DomainDrivenDesign.SmallTest
         }
     }
 
+
+    //Domain Event için gerekli.
+    public class OrderEventExample
+    {
+        public int Id { get; set; }
+        public string ProductName { get; set; }
+
+        public List<IDomainEvent> DomainEvents { get; } = new List<IDomainEvent>();
+
+        public void CreateOrder (int id ,string productName)
+        {
+            Id = id;
+            ProductName = productName;
+            //Diğer işlemler.
+            //Domain Event oluşturma ve ekleme
+            DomainEvents.Add(new OrderCreatedEvent(id));
+        }
+    }
+
+    //Bununla işaretlenen classlar olursa onlar otomatik olarak Domain Event olarak kabul edilir.
+    public interface IDomainEvent
+    {
+        
+    }
+
+    public class OrderCreatedEvent : IDomainEvent
+    {
+        public int OrderId { get; }
+        public OrderCreatedEvent(int id)
+        {
+            OrderId = id;
+        }
+        
+    }
+
+    public static class DomainEvenetDispatcher
+    {
+        public static void Dispatch(List<IDomainEvent> domainEvents)
+        {
+            foreach (var domainEvent in domainEvents)
+            {
+                if(domainEvent is OrderCreatedEvent orderCreatedEvent)
+                {
+                    //Order oluşturma işlemleri
+                    Console.WriteLine($"Order Created with ID: {orderCreatedEvent.OrderId}");
+                }
+                else
+                {
+                    //Diğer domain eventler için işlemler
+                    Console.WriteLine("Unknown domain event type.");
+                }
+            }
+        }
+    }
+
+
     public class Program
     {
         public static void Main()
@@ -85,36 +141,43 @@ namespace SmallTest.DomainDrivenDesign.SmallTest
 
 
 
-            User kubilay = new(Guid.NewGuid(), new("Kubilay"), new("Aa123456."), new("Selamlarrr@fas.com"), new("Türkiye", "İstanbul", "Test", "Test Full Address", "3124"));
+            //User kubilay = new(Guid.NewGuid(), new("Kubilay"), new("Aa123456."), new("Selamlarrr@fas.com"), new("Türkiye", "İstanbul", "Test", "Test Full Address", "3124"));
 
 
-            Category elektronik = new(Guid.NewGuid(), new("Elektronik"), new List<Product>());
-            Product product = new(Guid.NewGuid(), new("Test Product"), 10, new(100, Currency.FromCode("TRY")), elektronik.Id, elektronik);
-            elektronik.Products.Add(product);
-            foreach (var p in elektronik.Products)
-            {
-                Console.WriteLine(p.Name);
-            }
+            //Category elektronik = new(Guid.NewGuid(), new("Elektronik"), new List<Product>());
 
-            foreach (var p in product.Category.Products)
-            {
-                Console.WriteLine(p.Name);
-            }
+            //Product product = new(Guid.NewGuid(), new("Test Product"), 10, new(100, Currency.FromCode("TRY")), elektronik.Id, elektronik);
 
-            Order order = new(Guid.NewGuid(), "ORD12345", DateTime.Now, OrderStatusEnum.AwaitingApproval);
-            
-            order.CreateOrderLine(new List<CreateOrderDto>
-            {
-                new(product.Id,2,200,"TRY",product)
+            //elektronik.Products.Add(product);
 
-            });
+            //foreach (var p in elektronik.Products)
+            //{
+            //    Console.WriteLine(p.Name);
+            //}
 
-           
-            foreach (var orderLine in order.OrderLines)
-            {
-                Console.WriteLine($"Order Line Product ID: {orderLine.ProductId}, Quantity: {orderLine.Quantity}, Amount: {orderLine.Price.Amount} {orderLine.Price.Currency.Code} , Prodcur {orderLine.Product.Name}");
-            }
+            //foreach (var p in product.Category.Products)
+            //{
+            //    Console.WriteLine(p.Name);
+            //}
 
+            //Order order = new(Guid.NewGuid(), "ORD12345", DateTime.Now, OrderStatusEnum.AwaitingApproval);
+
+            //order.CreateOrderLine(new List<CreateOrderDto>
+            //{
+            //    new(product.Id,2,200,"TRY",product)
+
+            //});
+
+
+            //foreach (var orderLine in order.OrderLines)
+            //{
+            //    Console.WriteLine($"Order Line Product ID: {orderLine.ProductId}, Quantity: {orderLine.Quantity}, Amount: {orderLine.Price.Amount} {orderLine.Price.Currency.Code} , Prodcur {orderLine.Product.Name}");
+            //}
+
+            OrderEventExample orderEventExample = new OrderEventExample();
+            orderEventExample.CreateOrder(1, "Test Product");
+            orderEventExample.CreateOrder(2, "Another Product");
+            DomainEvenetDispatcher.Dispatch(orderEventExample.DomainEvents);
 
 
 
